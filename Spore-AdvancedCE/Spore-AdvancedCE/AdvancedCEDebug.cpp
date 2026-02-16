@@ -45,8 +45,9 @@ void AdvancedCEDebug::ParseLine(const ArgScript::Line& line)
 
 bool AdvancedCEDebug::PartCanReparent(Editors::EditorRigblock* part) {
 
-	if (!part->mBooleanAttributes[Editors::kEditorRigblockModelIsVertebra] && !part->mBooleanAttributes[Editors::kEditorRigblockModelUseSkin]
-		&& !part->mpParent) {
+	if (!part->mBooleanAttributes[Editors::kEditorRigblockModelIsVertebra] &&
+		!part->mBooleanAttributes[Editors::kEditorRigblockModelUseSkin] && !part->mpParent) {
+
 		if (part->mBooleanAttributes[Editors::kEditorRigblockModelCannotBeParentless]) {
 			return true;
 		}
@@ -89,8 +90,12 @@ EditorRigblockPtr AdvancedCEDebug::GetClosestPart(Editors::EditorRigblock* part)
 		EditorRigblockPtr closest = Editor.GetEditorModel()->mRigblocks[0];
 		float closestDistance = 99999999999.0f;
 		Vector3 position = part->mPosition;
-		for (EditorRigblockPtr part2 : Editor.GetEditorModel()->mRigblocks)
+
+		auto symmetric = GetSymmetricPart(part);
+
+		for (const EditorRigblockPtr part2 : Editor.GetEditorModel()->mRigblocks)
 		{
+			if (part2 == part || part2 == symmetric || IsPartParentOf(part, part2.get())) { continue; }
 			float dist = Math::distance(part2->mPosition, position); // / (part2->mModelScale);
 			if (dist < closestDistance && part != part2.get() && part2->mpParent != part)
 			{
@@ -100,6 +105,9 @@ EditorRigblockPtr AdvancedCEDebug::GetClosestPart(Editors::EditorRigblock* part)
 
 		}
 		part->field_138 = closest->mPosition - position;
+		if (part == closest) {
+			return nullptr;
+		}
 		return closest;
 	}
 	if (Editor.GetEditorModel()->mRigblocks[0] != part) {
@@ -108,6 +116,19 @@ EditorRigblockPtr AdvancedCEDebug::GetClosestPart(Editors::EditorRigblock* part)
 	else {
 		return nullptr;
 	}
+}
+
+bool AdvancedCEDebug::IsPartParentOf(Editors::EditorRigblock* parent, Editors::EditorRigblock* child)
+{
+	auto partparent = child->mpParent;
+	if (partparent == parent) { return true; }
+	while (partparent != nullptr) {
+		if (partparent == parent) {
+			return true;
+		}
+		partparent = partparent->mpParent;
+	}
+	return false;
 }
 
 const char* AdvancedCEDebug::GetDescription(ArgScript::DescriptionMode mode) const

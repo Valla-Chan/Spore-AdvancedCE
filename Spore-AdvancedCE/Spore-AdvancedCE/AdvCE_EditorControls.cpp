@@ -87,8 +87,8 @@ void AdvCE_EditorControls::SetAdvCEManips(bool state) {
 		editor->mEnabledManipulators = mVehicleManipulatorsAdvCE;
 		// programmatically suppress snapping on all rigblocks
 		if (editor->GetEditorModel()) {
-			for (auto rigblock : editor->GetEditorModel()->mRigblocks) {
-				rigblock->mModelSymmetrySnapDelta *= 0.001f;
+			for (const auto rigblock : editor->GetEditorModel()->mRigblocks) {
+				rigblock->mModelSymmetrySnapDelta *= 0.00001f;
 			}
 		}
 	}
@@ -96,8 +96,8 @@ void AdvCE_EditorControls::SetAdvCEManips(bool state) {
 		editor->mEnabledManipulators = mVehicleManipulatorsDefault;
 		// programmatically re-enable snapping on all rigblocks
 		if (editor->GetEditorModel()) {
-			for (auto rigblock : editor->GetEditorModel()->mRigblocks) {
-				rigblock->mModelSymmetrySnapDelta /= 0.001f;
+			for (const auto rigblock : editor->GetEditorModel()->mRigblocks) {
+				rigblock->mModelSymmetrySnapDelta /= 0.00001f;
 			}
 		}
 	}
@@ -108,16 +108,16 @@ void AdvCE_EditorControls::SetSnapSuppressor(bool state) {
 	if (state) {
 		// programmatically suppress snapping on all rigblocks
 		if (editor->GetEditorModel()) {
-			for (auto rigblock : editor->GetEditorModel()->mRigblocks) {
-				rigblock->mModelSymmetrySnapDelta *= 0.001f;
+			for (const auto rigblock : editor->GetEditorModel()->mRigblocks) {
+				rigblock->mModelSymmetrySnapDelta *= 0.00001f;
 			}
 		}
 	}
 	else {
 		// programmatically re-enable snapping on all rigblocks
 		if (editor->GetEditorModel()) {
-			for (auto rigblock : editor->GetEditorModel()->mRigblocks) {
-				rigblock->mModelSymmetrySnapDelta /= 0.001f;
+			for (const auto rigblock : editor->GetEditorModel()->mRigblocks) {
+				rigblock->mModelSymmetrySnapDelta /= 0.00001f;
 			}
 		}
 	}

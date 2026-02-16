@@ -15,6 +15,7 @@ public:
 	static bool AdvancedCEDebug::PartCanReparent(Editors::EditorRigblock* part);
 	static EditorRigblockPtr GetSymmetricPart(Editors::EditorRigblock* part);
 	static EditorRigblockPtr GetClosestPart(Editors::EditorRigblock* part);
+	static bool IsPartParentOf(Editors::EditorRigblock* parent, Editors::EditorRigblock* child);
 	
 	// Returns a string containing the description. If mode != DescriptionMode::Basic, return a more elaborated description
 	const char* GetDescription(ArgScript::DescriptionMode mode) const override;
