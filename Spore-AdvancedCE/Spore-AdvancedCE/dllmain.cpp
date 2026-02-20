@@ -28,7 +28,6 @@ void ReparentParts(Editors::cEditor* editor, bool force = false) {
 			// fix parts that are their own grandparent
 			if (part->mpParent && part->mpParent->mpParent && part->mpParent->mpParent == part) {
 				part->mpParent->mpParent = nullptr;
-				part->mpParent = nullptr;
 				continue;
 			}
 
@@ -48,9 +47,6 @@ void ReparentParts(Editors::cEditor* editor, bool force = false) {
 					HintManager.ShowHint(id("advce-corruptlimb"));
 				}
 			}
-		}
-		if (force) {
-			editor->Undo(true, true);
 		}
 	}
 }

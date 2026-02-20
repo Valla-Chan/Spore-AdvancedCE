@@ -126,7 +126,8 @@ void AdvCE_EditorControls::SetSnapSuppressor(bool state) {
 // exclude things that match this description, because they like to crash.
 bool AdvCE_EditorControls::IsRigblockChassis(EditorRigblockPtr part) const {
 	if (!part) { return false; }
-	return part->mBooleanAttributes[kEditorRigblockModelPreferToBeOnPlaneOfSymmetry];
+	if (part->mModelRigBlockType.groupID != id("vehicle")) return false;
+	return part->mBooleanAttributes[kEditorRigblockModelPreferToBeOnPlaneOfSymmetry] && !part->mBooleanAttributes[kEditorRigblockModelCannotBeParentless];
 }
 
 int AdvCE_EditorControls::GetEventFlags() const
