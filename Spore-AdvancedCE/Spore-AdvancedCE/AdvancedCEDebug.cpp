@@ -73,7 +73,7 @@ EditorRigblockPtr AdvancedCEDebug::GetSymmetricPart(Editors::EditorRigblock* par
 		auto blockdata = Editor.GetSkin()->GetMesh()->mpCreatureData->mRigblocks[rigblockIndex];
 		auto rigblockSymmIndex = blockdata.mSymmetricIndex;
 
-		if (rigblocks[rigblockSymmIndex]) {
+		if (rigblockSymmIndex > -1 && rigblockSymmIndex < rigblocks.size() && rigblocks[rigblockSymmIndex]) {
 			return rigblocks[rigblockSymmIndex];
 		}
 	}
