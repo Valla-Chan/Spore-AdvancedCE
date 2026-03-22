@@ -69,7 +69,10 @@ EditorRigblockPtr AdvancedCEDebug::GetSymmetricPart(Editors::EditorRigblock* par
 	int rigblockIndex = eastl::distance(rigblocks.begin(), it);
 
 	// Use the rigblock index to get the symmetric block index and rigblock
-	if (Editor.GetSkin() && Editor.GetSkin()->GetMesh() && Editor.GetSkin()->GetMesh()->mpCreatureData) {
+	if (Editor.GetSkin() && Editor.GetSkin()->GetMesh() &&
+		Editor.GetSkin()->GetMesh()->mpCreatureData &&
+		Editor.GetSkin()->GetMesh()->mpCreatureData->mRigblocks.size() > rigblockIndex) {
+
 		auto blockdata = Editor.GetSkin()->GetMesh()->mpCreatureData->mRigblocks[rigblockIndex];
 		auto rigblockSymmIndex = blockdata.mSymmetricIndex;
 
